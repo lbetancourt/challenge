@@ -1,0 +1,10 @@
+challenge:
+  third:
+    api:
+      ip2country:
+        url: "${API_IP_TO_COUNTRY_URL:https://api.ip2country.info/ip?}"
+      restcountries:
+        url: "${API_REST_COUNTRIES_URL:https://restcountries.eu/rest/v2/alpha/}"
+      fixer:
+        url: "${API_FIXER_URL:http://data.fixer.io/api/latest}"
+        key: "${API_FIXER_KEY:780559c9b0110a2ea1ab42491a4f9b1b}"
