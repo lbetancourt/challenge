@@ -46,7 +46,7 @@ public class IPProcessUseCase implements IPProcess {
                     )
             );
         } catch (RuntimeException ex) {
-            log.info("trace [{}] error processing IP [{}] due to {}", ipProcessQuery.getProcessIdentifier(), ipProcessQuery.getIp(), ex.getMessage());
+            log.error("trace [{}] error processing IP [{}] due to {}", ipProcessQuery.getProcessIdentifier(), ipProcessQuery.getIp(), ex.getMessage());
             throw ex;
         }
     }

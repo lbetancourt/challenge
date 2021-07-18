@@ -20,7 +20,7 @@ public class IPForbiddenPostgres {
     @Id
     private UUID id;
 
-    @Column(name = "ip")
+    @Column(name = "ip", unique = true)
     private String ip;
 
     @Column(name = "forbidden_date")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class IPControllerAdvice {
     @ExceptionHandler({RuntimeException.class, Exception.class})
     public ResponseEntity<String> handleException(final Throwable exception) {
-        log.error("Internal server error", exception);
+        log.error("Internal server error {}", exception.getMessage());
         return ResponseEntity.internalServerError()
                 .body("Internal server error");
     }
