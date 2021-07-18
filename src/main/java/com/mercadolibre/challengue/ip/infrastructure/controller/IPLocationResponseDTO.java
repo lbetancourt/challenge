@@ -11,4 +11,16 @@ import java.util.UUID;
 public final class IPLocationResponseDTO {
     private final UUID requestIdentifier;
     private final IPInfo ipInfo;
+
+    public static IPLocationResponseDTO buildFrom(UUID requestIdentifier, IPInfo ipInfo) {
+        return IPLocationResponseDTO.builder()
+                .withRequestIdentifier(requestIdentifier)
+                .withIpInfo(IPInfo.buildFrom(
+                        ipInfo.getNameCountry(),
+                        ipInfo.getIsoCountry(),
+                        ipInfo.getCurrency(),
+                        ipInfo.getExchangePrice()
+                ))
+                .build();
+    }
 }

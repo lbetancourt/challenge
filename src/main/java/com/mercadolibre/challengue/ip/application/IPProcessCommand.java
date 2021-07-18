@@ -8,12 +8,12 @@ import java.util.UUID;
 
 @Getter
 @Builder(setterPrefix = "with")
-public final class IPProcessQuery {
+public final class IPProcessCommand {
     private final UUID processIdentifier;
     private final String ip;
 
-    public static IPProcessQuery buildWithUUID(String ip) {
-        return IPProcessQuery.builder()
+    public static IPProcessCommand buildWithUUID(String ip) {
+        return IPProcessCommand.builder()
                 .withProcessIdentifier(IdentifierCreator.generateUUID())
                 .withIp(ip)
                 .build();
