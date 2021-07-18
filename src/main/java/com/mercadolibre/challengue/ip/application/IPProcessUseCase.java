@@ -1,11 +1,10 @@
 package com.mercadolibre.challengue.ip.application;
 
-import com.mercadolibre.challengue.ip.domain.IPForbidden;
 import com.mercadolibre.challengue.ip.domain.IPForbiddenException;
 import com.mercadolibre.challengue.ip.domain.IPForbiddenRepository;
 import com.mercadolibre.challengue.ip.domain.IPInfo;
-import com.mercadolibre.challengue.ip.infrastructure.controller.IPLocationResponseDTO;
 import com.mercadolibre.challengue.ip.infrastructure.IPProcess;
+import com.mercadolibre.challengue.ip.infrastructure.controller.IPLocationResponseDTO;
 import com.mercadolibre.challengue.shared.Fixer;
 import com.mercadolibre.challengue.shared.IPToCountry;
 import com.mercadolibre.challengue.shared.RestCountries;
@@ -29,7 +28,7 @@ public class IPProcessUseCase implements IPProcess {
     public IPLocationResponseDTO getIPInfo(IPProcessQuery ipProcessQuery) {
         try {
             if (checkIPIsForbidden(ipProcessQuery))
-                throw new IPForbiddenException("IP " + ipProcessQuery.getIp() + " Banned");
+                throw new IPForbiddenException(String.format("IP %s is Banned", ipProcessQuery.getIp()));
 
             var ipToCountryResponseDTO = ipToCountry
                     .getCountryFrom(ipProcessQuery.getIp());
@@ -47,7 +46,7 @@ public class IPProcessUseCase implements IPProcess {
                     )
             );
         } catch (RuntimeException ex) {
-            log.info("error processing IP [{}] due to {}", ipProcessQuery.getIp(), ex.getMessage());
+            log.info("trace [{}] error processing IP [{}] due to {}", ipProcessQuery.getProcessIdentifier(), ipProcessQuery.getIp(), ex.getMessage());
             throw ex;
         }
     }

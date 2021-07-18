@@ -31,6 +31,10 @@ public class IPForbiddenComponent implements IPForbiddenRepository {
     @Override
     public Optional<IPForbidden> findByIp(IPProcessQuery ipProcessQuery) {
         IPForbiddenPostgres ipForbiddenPostgres = ipForbiddenPostgresRepository.findByIp(ipProcessQuery.getIp());
-        return Optional.of(IPForbidden.buildFrom(ipForbiddenPostgres.getIp()));
+        if (ipForbiddenPostgres != null) {
+            return Optional.of(IPForbidden.buildFrom(ipForbiddenPostgres.getIp()));
+        } else {
+            return Optional.empty();
+        }
     }
 }

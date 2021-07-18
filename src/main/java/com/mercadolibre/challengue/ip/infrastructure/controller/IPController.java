@@ -23,7 +23,7 @@ public class IPController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<IPBannedResponseDTO> setIPBanned(IPBannedRequestDTO ipBannedRequestDTO) {
+    public ResponseEntity<IPBannedResponseDTO> setIPBanned(@RequestBody IPBannedRequestDTO ipBannedRequestDTO) {
         return ResponseEntity.ok()
                 .body(ipBanned.recordIPAsBanned(IPProcessCommand.buildWithUUID(ipBannedRequestDTO.getIp())));
     }

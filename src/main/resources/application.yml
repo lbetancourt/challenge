@@ -1,3 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:25432/meli
+    username: meli-user
+    password: meli-pass
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+  jpa:
+    show-sql: false
+    open-in-view: false
+
 challenge:
   third:
     api:

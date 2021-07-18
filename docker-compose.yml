@@ -1,0 +1,22 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:12.2
+    restart: always
+    environment:
+      POSTGRES_DB: meli
+      POSTGRES_USER: meli-user
+      POSTGRES_PASSWORD: meli-pass
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db-meli:/var/lib/postgresql/data
+    ports:
+      - "25432:5432"
+    networks:
+      - meli-network
+volumes:
+  db-meli:
+networks:
+  meli-network:
+    driver: bridge
+
