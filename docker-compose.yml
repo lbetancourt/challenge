@@ -14,6 +14,24 @@ services:
       - "25432:5432"
     networks:
       - meli-network
+  ip-meli:
+    build:
+      context: .
+    image: 'ip-meli:1.0.0'
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/meli
+      CACHE_HOST: redis
+      API_THIRD_TIMEOUT: "5"
+      API_IP_TO_COUNTRY_URL: https://api.ip2country.info/ip?
+      API_REST_COUNTRIES_URL: https://restcountries.eu/rest/v2/alpha/
+      API_FIXER_URL: http://data.fixer.io/api/latest
+      API_FIXER_KEY: 780559c9b0110a2ea1ab42491a4f9b1b
+    ports:
+      - '8080:8080'
+    networks:
+      - meli-network
+    depends_on:
+      - postgres
 volumes:
   db-meli:
 networks:

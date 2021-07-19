@@ -3,9 +3,13 @@ spring:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
   flyway:
-    enabled: false
+    enabled: true
+    locations: classpath:db/migration
     baseline-on-migrate: true
     baseline-version: 0
+  jpa:
+    show-sql: false
+    open-in-view: false
 
 challenge:
   third:
@@ -17,3 +21,4 @@ challenge:
       fixer:
         url: "${API_FIXER_URL:http://data.fixer.io/api/latest}"
         key: "${API_FIXER_KEY:780559c9b0110a2ea1ab42491a4f9b1b}"
+
