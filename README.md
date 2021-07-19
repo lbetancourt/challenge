@@ -1,4 +1,78 @@
-# Getting Started
+# Challenge Meli
+
+## How to run
+execute on the project root
+```console
+docker-compose up
+```
+execute silent mode
+```console
+docker-compose up -d
+```
+
+## Endpoints
+
+*base url* http://localhost:8080
+
+**IP info**
+----
+    obtain ip information
+* **URL**
+
+  /api/v1/ip/{ip}
+
+* **Method:**
+
+  `GET`
+
+*  **URL Params**
+
+   **Required:**
+
+`ip=[String]`
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** `{ "requestIdentifier": "11e5288f-e83a-11eb-a746-bdb01251fe1c", "ipInfo": { "nameCountry": "Germany", "isoCountry": "DE", "currency": "EUR", "exchangePrice": "1" } }`
+
+* **Error Response:**
+
+    * **Code:** 500 Internal server error <br />
+      **Content:** `Internal server error`
+
+* **Sample Call:**
+    ```console
+    http://localhost:8080/api/v1/ip/5.6.7.8
+    ```
+
+**IP Banned**
+----
+    banned ip
+* **URL**
+
+  /api/ip
+
+* **Method:**
+
+  `POST`
+
+* **Data Params (payload)**
+
+  **Required:**
+
+  `{ip: "5.6.7.8"}`
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** `{ "requestIdentifier": "1edcb540-e83a-11eb-a746-c9328437f9c2", "ipForbidden": { "ip": "5.6.7.8" } }`
+
+* **Error Response:**
+
+    * **Code:** 500 Internal server error <br />
+      **Content:** `Internal server error`
+
 
 ### Reference Documentation
 For further reference, please consider the following sections:
