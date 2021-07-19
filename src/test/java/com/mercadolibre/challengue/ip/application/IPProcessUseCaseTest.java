@@ -5,6 +5,7 @@ import com.mercadolibre.challengue.ip.domain.IPForbiddenException;
 import com.mercadolibre.challengue.ip.domain.IPForbiddenRepository;
 import com.mercadolibre.challengue.ip.infrastructure.IPProcess;
 import com.mercadolibre.challengue.ip.infrastructure.controller.IPLocationResponseDTO;
+import com.mercadolibre.challengue.ip.infrastructure.redis.CurrencyExchange;
 import com.mercadolibre.challengue.shared.Fixer;
 import com.mercadolibre.challengue.shared.IPToCountry;
 import com.mercadolibre.challengue.shared.RestCountries;
@@ -76,6 +77,8 @@ public class IPProcessUseCaseTest {
         expectedFixerResponseDTO.setDate("2021-07-17");
         expectedFixerResponseDTO.setRates(rates);
 
+        var currencyExchange =new CurrencyExchange("COP", 4503.799995);
+
         Mockito
                 .when(ipToCountry.getCountryFrom(anyString()))
                 .thenReturn(ipToCountryResponseDTO);
@@ -85,8 +88,8 @@ public class IPProcessUseCaseTest {
                 .thenReturn(restCountryResponseDTO);
 
         Mockito
-                .when(fixer.getForeignExchangeFrom())
-                .thenReturn(expectedFixerResponseDTO);
+                .when(fixer.getForeignExchangeFrom(anyString()))
+                .thenReturn(currencyExchange);
 
         IPLocationResponseDTO ipLocationResponseDTO = ipProcess.getIPInfo(ipProcessQuery);
 
@@ -170,7 +173,7 @@ public class IPProcessUseCaseTest {
                 .thenReturn(restCountryResponseDTO);
 
         Mockito
-                .when(fixer.getForeignExchangeFrom())
+                .when(fixer.getForeignExchangeFrom(anyString()))
                 .thenThrow(new RestClientException("no Get"));
 
         assertThrows(RuntimeException.class, () -> ipProcess.getIPInfo(ipProcessQuery));

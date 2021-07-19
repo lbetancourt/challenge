@@ -1,7 +1,7 @@
 package com.mercadolibre.challengue.shared;
 
-import com.mercadolibre.challengue.shared.fixer.FixerResponseDTO;
+import com.mercadolibre.challengue.ip.infrastructure.redis.CurrencyExchange;
 
 public interface Fixer {
-    FixerResponseDTO getForeignExchangeFrom();
+    CurrencyExchange getForeignExchangeFrom(String currencyCode);
 }

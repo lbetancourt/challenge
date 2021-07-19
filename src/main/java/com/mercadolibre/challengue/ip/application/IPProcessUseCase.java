@@ -8,7 +8,6 @@ import com.mercadolibre.challengue.ip.infrastructure.controller.IPLocationRespon
 import com.mercadolibre.challengue.shared.Fixer;
 import com.mercadolibre.challengue.shared.IPToCountry;
 import com.mercadolibre.challengue.shared.RestCountries;
-import com.mercadolibre.challengue.shared.fixer.FixerResponseDTO;
 import com.mercadolibre.challengue.shared.restcountries.RestCountryResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,29 +33,28 @@ public class IPProcessUseCase implements IPProcess {
                     .getCountryFrom(ipProcessQuery.getIp());
             var restCountryResponseDTO = restCountries
                     .getCurrenciesFrom(ipToCountryResponseDTO.getCountryCode());
-            var fixerResponseDTO = fixer.getForeignExchangeFrom();
+            var currencyExchange = fixer.getForeignExchangeFrom(getCodeCurrency(restCountryResponseDTO));
 
             return IPLocationResponseDTO.buildFrom(
                     ipProcessQuery.getProcessIdentifier(),
                     IPInfo.buildFrom(
                             ipToCountryResponseDTO.getCountryName(),
                             ipToCountryResponseDTO.getCountryCode(),
-                            getCodeCurrency(restCountryResponseDTO),
-                            getRate(restCountryResponseDTO, fixerResponseDTO)
+                            currencyExchange.getCodeIso(),
+                            currencyExchange.getExchange().toString()
                     )
             );
         } catch (RuntimeException ex) {
             log.error("trace [{}] error processing IP [{}] due to {}", ipProcessQuery.getProcessIdentifier(), ipProcessQuery.getIp(), ex.getMessage());
             throw ex;
+        } catch (Exception ex) {
+            log.error("trace [{}] error processing IP [{}] due to {}", ipProcessQuery.getProcessIdentifier(), ipProcessQuery.getIp(), ex.getMessage());
+            throw new RuntimeException(ex.getMessage(), ex);
         }
     }
 
     private boolean checkIPIsForbidden(IPProcessQuery ipProcessQuery) {
         return ipForbiddenRepository.findByIp(ipProcessQuery).isPresent();
-    }
-
-    private String getRate(RestCountryResponseDTO restCountryResponseDTO, FixerResponseDTO fixerResponseDTO) {
-        return fixerResponseDTO.getRateByCodeCurrency(getCodeCurrency(restCountryResponseDTO));
     }
 
     private String getCodeCurrency(RestCountryResponseDTO restCountryResponseDTO) {

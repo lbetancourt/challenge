@@ -22,9 +22,12 @@ public class IPBannedUseCase implements IPBanned {
                     .withRequestIdentifier(ipProcessCommand.getProcessIdentifier())
                     .withIpForbidden(ipForbidden)
                     .build();
-        }catch (RuntimeException ex){
+        } catch (RuntimeException ex) {
             log.error("trace [{}] error processing IP [{}] due to {}", ipProcessCommand.getProcessIdentifier(), ipProcessCommand.getIp(), ex.getMessage());
             throw ex;
+        } catch (Exception ex) {
+            log.error("trace [{}] error processing IP [{}] due to {}", ipProcessCommand.getProcessIdentifier(), ipProcessCommand.getIp(), ex.getMessage());
+            throw new RuntimeException(ex.getMessage(), ex);
         }
     }
 }

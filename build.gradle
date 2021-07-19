@@ -28,18 +28,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.flywaydb:flyway-core'
     implementation 'com.fasterxml.uuid:java-uuid-generator:4.0'
-    implementation 'org.mock-server:mockserver-client-java:5.10.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation "org.testcontainers:mockserver"
     testImplementation 'com.h2database:h2'
-
-    testImplementation 'io.cucumber:cucumber-java:6.10.4'
-    testImplementation 'io.cucumber:cucumber-junit:6.10.4'
-    testImplementation 'io.cucumber:cucumber-spring:6.10.4'
 }
 
 dependencyManagement {

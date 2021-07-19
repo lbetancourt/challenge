@@ -12,6 +12,9 @@ spring:
   jpa:
     show-sql: false
     open-in-view: false
+  redis:
+    host: "${CACHE_HOST:localhost}"
+    port: 6379
 
 challenge:
   third:
